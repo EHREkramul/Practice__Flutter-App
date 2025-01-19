@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp()); // Pass an Application
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -10,88 +10,98 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.red),
-      darkTheme: ThemeData(primarySwatch: Colors.cyan),
-      color: Colors.blue,
       debugShowCheckedModeBanner: false,
-      home: const HomeActivity(),
+      title: 'First App',
+      home: HomeActivity(),
     );
   }
 }
 
 class HomeActivity extends StatelessWidget {
-  // An activity
   const HomeActivity({super.key});
-
-  // Snack bars
-  mySnackBar(message, context) {
-    return ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Inventory'),
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
-        toolbarHeight: 60,
-        toolbarOpacity: 1.0,
-        elevation: 0,
-        actions: [
-          IconButton(
-              onPressed: () {
-                mySnackBar('Search', context);
-              },
-              icon: Icon(Icons.search)),
-          IconButton(
-              onPressed: () {
-                mySnackBar('Email', context);
-              },
-              icon: Icon(Icons.email)),
-          IconButton(
-              onPressed: () {
-                mySnackBar('Settings', context);
-              },
-              icon: Icon(Icons.settings)),
-          IconButton(
-              onPressed: () {
-                mySnackBar('Account', context);
-              },
-              icon: Icon(Icons.account_circle)),
+        centerTitle: true,
+        title: Text('First App'),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            'Column',
+            style: TextStyle(fontSize: 24),
+          ),
+          ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.vertical(bottom: Radius.circular(12)),
+              ),
+            ),
+            child: Text('Login'),
+          ),
+          ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.vertical(bottom: Radius.circular(12)),
+              ),
+            ),
+            child: Text('Login'),
+          ),
+          TextButton(onPressed: () {}, child: Text('Text Button')),
+          IconButton(onPressed: () {}, icon: Icon(Icons.account_circle)),
+          InkWell(
+            onTap: () {
+              print('ontap');
+            },
+            onLongPress: () {
+              print('long press');
+            },
+            child: Container(
+              padding: EdgeInsets.all(10),
+              margin: EdgeInsets.only(top: 120),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.only(topRight: Radius.circular(15)),
+                border: Border.all(color: Colors.black, width: 5),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    blurRadius: 10,
+                    spreadRadius: 5,
+                    offset: Offset(5, 5),
+                  ),
+                ],
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Colors.red, Colors.white, Colors.yellow],
+                ),
+              ),
+              height: 100,
+              width: 200,
+              child: Text(
+                'This is Container',
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          mySnackBar('Floating Action Button', context);
-        },
-        elevation: 10,
-        tooltip: 'Floating Button',
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
-        shape: CircleBorder(),
-        child: Icon(Icons.add),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.message), label: "Contact"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
-        ],
-        onTap: (int index) {
-          if (index == 0) {
-            mySnackBar("Home NavBar", context);
-          } else if (index == 1) {
-            mySnackBar("Contact NavBar", context);
-          } else if (index == 2) {
-            mySnackBar("Profile NavBar", context);
-          }
-        },
-      ),
-      drawer: Drawer(),
     );
   }
 }
