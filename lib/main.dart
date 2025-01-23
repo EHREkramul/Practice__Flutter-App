@@ -17,60 +17,50 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
-  mySnackBar(message, context){
-    return ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message),duration: Duration(milliseconds: 500),),
-    );
+  @override
+  State<HomePage> createState() => _HomePage();
+}
+
+class _HomePage extends State<HomePage> {
+  int _count = 0;
+  _incrementCount() {
+    setState(() {
+      _count++;
+    });
   }
+
+  final TextEditingController _taskNameController = TextEditingController();
+
+  final List<String> _taskItems = [];
+
+  _addTask({required String taskName}) {
+    if (taskName.trim().isNotEmpty) {
+      setState(() {
+        _taskItems.insert(0, taskName);
+      });
+    }
+  }
+
+  _removeTask({required int index}) {
+    setState(() {
+      _taskItems.removeAt(index);
+    });
+  }
+
+  _clearTask() {
+    setState(() {
+      _taskItems.clear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    var myItems = [
-      {
-        "img": "https://i.ytimg.com/vi/HADyEFViNxg/maxresdefault.jpg",
-        "title": "Rabbil"
-      },
-      {
-        "img": "https://i.ytimg.com/vi/HADyEFViNxg/maxresdefault.jpg",
-        "title": "Rupom"
-      },
-      {
-        "img": "https://i.ytimg.com/vi/HADyEFViNxg/maxresdefault.jpg",
-        "title": "Hasan"
-      },
-      {
-        "img": "https://i.ytimg.com/vi/HADyEFViNxg/maxresdefault.jpg",
-        "title": "Salif"
-      },
-      {
-        "img": "https://i.ytimg.com/vi/HADyEFViNxg/maxresdefault.jpg",
-        "title": "Alhasan"
-      },
-      {
-        "img": "https://i.ytimg.com/vi/HADyEFViNxg/maxresdefault.jpg",
-        "title": "Nurza"
-      },
-      {
-        "img": "https://i.ytimg.com/vi/HADyEFViNxg/maxresdefault.jpg",
-        "title": "Nihan"
-      },
-      {
-        "img": "https://i.ytimg.com/vi/HADyEFViNxg/maxresdefault.jpg",
-        "title": "Nuri"
-      },
-      {
-        "img": "https://i.ytimg.com/vi/HADyEFViNxg/maxresdefault.jpg",
-        "title": "Sumaiya"
-      }
-    ];
-
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('Test App'),
+        title: Text('TODO'),
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
       ),
@@ -90,24 +80,54 @@ class HomePage extends StatelessWidget {
           )
         ],
       ),
-      body: ListView.builder(
-        itemCount: myItems.length,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              mySnackBar('Card ${myItems[index]['title']}', context);
-            },
-            child: Container(
-              margin: EdgeInsets.all(10),
-              width: double.infinity,
-              height: 200,
-              child: Image.network(
-                myItems[index]['img']!,
-                fit: BoxFit.fill,
+      floatingActionButton: FloatingActionButton(
+        onPressed: _clearTask,
+        backgroundColor: Colors.redAccent,
+        foregroundColor: Colors.white,
+        shape: CircleBorder(),
+        child: Icon(
+          Icons.delete_rounded,
+          size: 30,
+        ),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          children: [
+            TextField(
+              controller: _taskNameController,
+              decoration: InputDecoration(
+                label: Text('Task Name'),
+                hintText: 'Enter Your Task',
+                border: OutlineInputBorder(),
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    _addTask(taskName: _taskNameController.text);
+                    _taskNameController.clear();
+                  },
+                  icon: Icon(Icons.add),
+                ),
               ),
             ),
-          );
-        },
+            SizedBox(height: 30),
+            Expanded(
+              child: ListView.builder(
+                itemCount: _taskItems.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTile(
+                      leading: Icon(Icons.task,),
+                      title: Text(_taskItems[index]),
+                      trailing: IconButton(
+                          onPressed: () => _removeTask(index: index),
+                          icon: Icon(Icons.delete_forever,color: Colors.red.shade300,)),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
