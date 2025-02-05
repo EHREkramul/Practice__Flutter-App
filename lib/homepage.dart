@@ -13,24 +13,33 @@ class HomePage extends StatelessWidget {
             padding: const EdgeInsets.only(left: 10, right: 10, top: 15),
             child: TextFormField(
               decoration: InputDecoration(
-                  label: Text('Name'), hintText: 'Enter your name'),
+                label: Text('Name'),
+                hintText: 'Enter your name',
+              ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 10, right: 10),
             child: TextFormField(
               decoration: InputDecoration(
-                  label: Text('Age'), hintText: 'Enter your age'),
+                label: Text('Age'),
+                hintText: 'Enter your age',
+              ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
             child: TextFormField(
               decoration: InputDecoration(
-                  label: Text('Salary'), hintText: 'Enter your salary'),
+                label: Text('Salary'),
+                hintText: 'Enter your salary',
+              ),
             ),
           ),
-          ElevatedButton(onPressed: (){}, child: Text('Add Employee'))
+          ElevatedButton(
+            onPressed: () {},
+            child: Text('Add Employee'),
+          )
         ],
       ),
     );
